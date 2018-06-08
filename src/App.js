@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+
+// Containers
+import Home from './containers/Home';
+import Maps from './containers/Maps';
+
+// Components
 import Header from './components/Header';
-import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div>
         <Header />
-        <p className="App-intro">
-          Rest of the home page
-        </p>
+        <div className="container-fluid">
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/maps" component={Maps} />
+          </Switch>
+        </div>
       </div>
     );
   }

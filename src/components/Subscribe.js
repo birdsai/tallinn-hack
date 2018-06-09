@@ -28,7 +28,7 @@ class Subscribe extends Component {
         <h2>Want to know when we launch?</h2>
         <br/>
         {!subscribed && (
-          <Form inline className="mx-auto w-100" onSubmit={this.subscribe}>
+          <Form inline className="justify-content-center" onSubmit={this.subscribe}>
             <FormGroup>
               <Input
                 type="email"

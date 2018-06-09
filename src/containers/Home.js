@@ -63,7 +63,9 @@ class Home extends Component {
               Bird’sAI helps people make use of the penta bytes of satellite data that are being generated every day. Through AI technology, we make it our mission to present people who want to leverage haystacks of potentially useful data, with the needles they were looking for.
             </p>
 
-            <div className="mb-4" style={{ borderLeft: '5px solid #eee', paddingLeft: 10 }}>
+            <img src="http://via.placeholder.com/600x300" alt=""/>
+
+            <div className="my-4" style={{ borderLeft: '5px solid #eee', paddingLeft: 10 }}>
               Strive for elegant and scalable solutions. At the intersection of AI and Earth Observation many awesome things are yet to be achieved
             </div>
 

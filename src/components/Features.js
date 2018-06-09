@@ -20,18 +20,17 @@ const features = [
     image: 'http://via.placeholder.com/450x350',
     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error nobis earum quo iste doloremque maiores! Deserunt impedit ipsam facilis quidem distinctio eaque eveniet eum accusantium aut! Iusto, consequuntur. Asperiores, dolorem.'
   }
-]
+];
 
 export default function Features({ features, alternate }) {
-  const leftClassname = idx =>
-    alternate && idx % 2 ? 'col-md-5 offset-md-1' : 'col-md-5';
+  const leftClassname = 'col-md-5 offset-md-1';
   const rightClassname = idx =>
-    alternate && idx % 2 ? 'col-md-5 offset-md-1' : 'col-md-6 offset-md-1';
+    alternate && idx % 2 ? 'col-md-5 offset-md-1' : 'col-md-4 offset-md-1';
   return (
     <div>
       {features.map((feature, idx) => (
         <FlexRow key={idx} className={alternate && idx % 2 && 'alternate'}>
-          <div className={leftClassname(idx)}>
+          <div className={leftClassname}>
             <FeatureContent {...feature} />
           </div>
           <div className={rightClassname(idx)}>
@@ -106,7 +105,6 @@ const Lead = styled.div`
 const ImageContainer = styled.div.attrs({
   className: 'img-container'
 })`
-  width: 1200px;
   ${media.tablet`
     width: auto;
   `};

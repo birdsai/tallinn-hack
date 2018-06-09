@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, FormGroup, Button } from 'reactstrap';
 import ThreeBounce from './ThreeBounce';
-// import Share from './Share';
-// import i18n from 'i18n';
 import subscribe from '../lib/mailchimp';
 
 class Subscribe extends Component {
@@ -16,19 +14,35 @@ class Subscribe extends Component {
     this.state = {
       subscribing: false,
       subscribed: false,
-      email: ''
+      email: '',
+      width: 0,
+      height: 0
     };
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+
+  componentDidMount() {
+      this.updateWindowDimensions();
+      window.addEventListener('resize', this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+      window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+      this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
 
   render() {
-    const { subscribing, subscribed, email, valid } = this.state;
+    const { subscribing, subscribed, email, valid, width, height } = this.state;
     const { title } = this.props;
     return (
-      <div className="mailchimp-subscribe text-center">
+      <div className="mailchimp-subscribe">
         <h2>Want to know when we launch?</h2>
         <br/>
         {!subscribed && (
-          <Form inline className="mx-auto w-100" onSubmit={this.subscribe}>
+          <Form style={{paddingLeft: width / 2 - 180}} inline onSubmit={this.subscribe}>
             <FormGroup>
               <Input
                 type="email"

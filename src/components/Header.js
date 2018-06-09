@@ -9,12 +9,11 @@ class Header extends Component {
           <Link to="/" className="navbar-brand">Birds AI</Link>
         </h5>
         <nav className="my-2 my-md-0 mr-md-3">
+          <Link className="p-2 text-dark" to="/about">About</Link>
           <Link className="p-2 text-dark" to="/maps">Map</Link>
-          <Link className="p-2 text-dark" to="#">Support</Link>
-          <Link className="p-2 text-dark" to="#">Features</Link>
-          <Link className="p-2 text-dark" to="#">Pricing</Link>
+          <Link className="p-2 text-dark" to="/features">Features</Link>
         </nav>
-        <Link className="btn btn-outline-primary" to="#">Sign up</Link>
+        <Link className="btn btn-outline-primary" to="#">Login</Link>
       </div>
     );
   }

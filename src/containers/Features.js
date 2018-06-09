@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import Maps from '../components/Maps';
-// import qs from 'qs';
+import Features from '../components/Features';
 
-class MapsPage extends Component {
+class FeaturesPage extends Component {
   render() {
     // const query = qs.parse(this.props.location.search);
     // const { zoom, lat, lng } = query;
     return (
       <div>
-        <Maps />
+        <Features />
       </div>
     );
   }
 }
 
-export default MapsPage;
+export default FeaturesPage;

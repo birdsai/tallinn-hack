@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import 'leaflet-geosearch/assets/css/leaflet.css';
 
 const lat = 58.5953;
 const lng = 25.0136;
@@ -36,13 +38,29 @@ class Maps extends Component {
     const overlayMaps = {
       'Agriculture': agriculture,
       'NDVI': ndvi
-    }
+    };
 
     const map = L.map('maps', {
       center: [lat, lng], // lat/lng in EPSG:4326
       zoom: 12,
       layers: [osm, agriculture]
     });
+
+    // On map move end
+    map.on('moveend', () => {
+      const zoom = map.getZoom();
+      const { lat, lng } = map.getCenter();
+      // do something here ?
+    });
+
+    // Search
+    const provider = new OpenStreetMapProvider();
+    const searchControl = new GeoSearchControl({
+      provider,
+      showMarker: false,
+      autoClose: true
+    });
+    map.addControl(searchControl);
 
     L.control.layers(baseMaps, overlayMaps).addTo(map);
   }

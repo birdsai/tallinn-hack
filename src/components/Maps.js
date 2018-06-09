@@ -7,6 +7,7 @@ import 'leaflet-draw';
 import 'leaflet-draw/dist/leaflet.draw.css';
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-geosearch/assets/css/leaflet.css';
+import ThreeBounce from './ThreeBounce';
 
 const SENTINAL_INSTANCE_ID = '390ee32f-87f7-4536-ac56-5ddce307ff00';
 const API = 'http://birdsai.co/DataRequest/MakeDataRequest';
@@ -34,12 +35,12 @@ class Maps extends Component {
     this.state = {
       model: 'LandUsage',
       satellite: 'L1C',
-      area: 'Coordinates'
+      area: 'Coordinates',
+      loading: false
     };
   }
 
   componentDidMount() {
-
     // OpenStreetMap
     const osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -79,6 +80,7 @@ class Maps extends Component {
       maxBounds,
       maxBoundsViscosity: 0.8
     });
+    this.map = map;
 
     // Rectangles
     const drawnItems = L.featureGroup().addTo(map);
@@ -125,12 +127,18 @@ class Maps extends Component {
     map.addControl(drawControl);
     map.addControl(searchControl);
 
+    // add ground truth
+    const ground = L.featureGroup().addTo(map);
+    this.ground = ground;
+
     // On drawing rectangle
-    map.on(L.Draw.Event.CREATED, function (e) {
+    map.on(L.Draw.Event.CREATED, e => {
       const type = e.layerType;
       const layer = e.layer;
       drawnItems.addLayer(layer);
-      console.log(layer.getBounds());
+
+      this.loadGroundTruth(ground);
+      ground.bringToFront();
     });
 
     L.control.layers(baseMaps, overlayMaps).addTo(map);
@@ -145,13 +153,35 @@ class Maps extends Component {
     const data = {
       ...this.state
     };
-    console.log(data);
+    this.loadGroundTruth(this.ground);
     request
       .post(API)
       .send(data)
       .then(res => {
       // response
     })
+  }
+
+  loadGroundTruth(ground) {
+    this.setState({ loading: true });
+    const parse_georaster = require("georaster");
+    const GeoRasterLayer = require("georaster-layer-for-leaflet");
+
+    const promises = [];
+    for (var i = 1; i <= 10; i++) {
+      promises.push(fetch(`/images/${i}.tif`)
+        .then(r => r.arrayBuffer())
+        .then(ab => parse_georaster(ab)));
+    }
+    Promise.all(promises).then(arr => {
+      arr.forEach(georaster => {
+        const layer = new GeoRasterLayer({
+          georaster: georaster,
+          opacity: 0.4
+        });
+        ground.addLayer(layer).bringToFront();
+      })
+    }).then(() => this.setState({ loading: false }));
   }
 
   render() {
@@ -200,6 +230,8 @@ class Maps extends Component {
             </div>
           </div>
           <Button color="primary" onClick={this.submit}>Submit</Button>
+          &nbsp;
+          {this.state.loading && <ThreeBounce color="#aaa" />}
         </div>
 
         <div id="maps" style={{ height: '600px' }}></div>

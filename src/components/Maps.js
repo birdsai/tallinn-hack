@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import 'leaflet-sidebar'
+import 'leaflet-sidebar/src/L.Control.Sidebar.css'
 
 const lat = 58.5953;
 const lng = 25.0136;
@@ -44,11 +46,19 @@ class Maps extends Component {
       layers: [osm, agriculture]
     });
 
+    const sidebar = L.control.sidebar('sidebar', {
+        position: 'left'
+    });
+
+    map.addControl(sidebar);
+
+    sidebar.show();
+
     L.control.layers(baseMaps, overlayMaps).addTo(map);
   }
 
   render() {
-    return (<div id="maps" style={{ height: '600px' }}></div>)
+    return (<div><div id="sidebar"><h1>leaflet-sidebar</h1></div><div id="maps" style={{ height: '600px' }}></div></div>)
   }
 }
 

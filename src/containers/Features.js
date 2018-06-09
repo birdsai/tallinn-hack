@@ -6,9 +6,9 @@ class FeaturesPage extends Component {
     // const query = qs.parse(this.props.location.search);
     // const { zoom, lat, lng } = query;
     return (
-      <div className="container">
+      <div className="container mt-4">
         <h1 className="text-center">Features</h1>
-        <Features />
+        <Features alternate />
       </div>
     );
   }

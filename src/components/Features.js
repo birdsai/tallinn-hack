@@ -85,7 +85,7 @@ FeatureImage.propTypes = {
 const FlexRow = styled.div.attrs({
   className: 'row align-items-center py-4'
 })`
-  ${media.tablet`
+  ${media.down.tablet`
     flex-direction: column;
   `};
 
@@ -107,7 +107,7 @@ const ImageContainer = styled.div.attrs({
   className: 'img-container'
 })`
   width: 1200px;
-  ${media.tablet`
+  ${media.down.tablet`
     width: auto;
   `};
 `;

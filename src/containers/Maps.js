@@ -7,7 +7,7 @@ class MapsPage extends Component {
     // const query = qs.parse(this.props.location.search);
     // const { zoom, lat, lng } = query;
     return (
-      <div>
+      <div className="mt-4">
         <Maps />
       </div>
     );

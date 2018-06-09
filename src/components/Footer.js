@@ -4,11 +4,12 @@ import {Link} from 'react-router-dom'
 export default function Footer() {
   return (
     <footer className="text-muted py-5 border-top">
-      <div className="container">
-        <p className="float-right">
-          <a href="#">Back to top</a>
-        </p>
-        <Link to="/about">About</Link>
+      <div className="container text-center">
+        <ul className="d-flex list list-unstyled justify-content-center">
+          <li className="pr-4"><Link to="/about">About</Link></li>
+          <li className="pr-4"><a href="mailto:info@birdsai.co">Contact</a></li>
+          <li className="pr-4"><a href="#">Back to top</a></li>
+        </ul>
       </div>
     </footer>
   )

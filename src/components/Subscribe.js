@@ -18,31 +18,17 @@ class Subscribe extends Component {
       width: 0,
       height: 0
     };
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-  }
-
-  componentDidMount() {
-      this.updateWindowDimensions();
-      window.addEventListener('resize', this.updateWindowDimensions);
-  }
-
-  componentWillUnmount() {
-      window.removeEventListener('resize', this.updateWindowDimensions);
-  }
-
-  updateWindowDimensions() {
-      this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
 
   render() {
-    const { subscribing, subscribed, email, valid, width, height } = this.state;
+    const { subscribing, subscribed, email, valid } = this.state;
     const { title } = this.props;
     return (
-      <div className="mailchimp-subscribe">
+      <div className="mailchimp-subscribe text-center">
         <h2>Want to know when we launch?</h2>
         <br/>
         {!subscribed && (
-          <Form style={{paddingLeft: width / 2 - 180}} inline onSubmit={this.subscribe}>
+          <Form inline className="justify-content-center" onSubmit={this.subscribe}>
             <FormGroup>
               <Input
                 type="email"

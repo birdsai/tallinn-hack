@@ -8,6 +8,7 @@ import 'leaflet-draw/dist/leaflet.draw.css';
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-geosearch/assets/css/leaflet.css';
 
+const SENTINAL_INSTANCE_ID = '390ee32f-87f7-4536-ac56-5ddce307ff00';
 const API = 'http://birdsai.co/DataRequest/MakeDataRequest';
 const lat = 59.32811085798514;
 const lng = 24.68559265136719;
@@ -46,8 +47,7 @@ class Maps extends Component {
 
     // Sentinel Hub WMS service
     // tiles generated using EPSG:3857 projection - Leaflet takes care of that
-    const baseUrl = "https://services.sentinel-hub.com/ogc/wms/5406033d-85c9-43b3-95fb-153e6b19b075";
-
+    const baseUrl = `https://services.sentinel-hub.com/ogc/wms/${SENTINAL_INSTANCE_ID}`;
 
     const Layer = layer => L.tileLayer.wms(baseUrl, {
       tileSize: 512,
@@ -59,6 +59,7 @@ class Maps extends Component {
       layers: layer,
       time:"2015-01-01/2018-06-08",
     });
+    const natural = Layer('TRUE_COLOR');
     const agriculture = Layer('AGRICULTURE');
     const ndvi = Layer('NDVI');
 
@@ -66,6 +67,7 @@ class Maps extends Component {
       'OpenStreetMap': osm
     };
     const overlayMaps = {
+      'Natural': natural,
       'Agriculture': agriculture,
       'NDVI': ndvi
     };
@@ -73,7 +75,7 @@ class Maps extends Component {
     const map = L.map('maps', {
       center: [lat, lng], // lat/lng in EPSG:4326
       zoom: 12,
-      layers: [osm, agriculture],
+      layers: [osm, natural],
       maxBounds,
       maxBoundsViscosity: 0.8
     });

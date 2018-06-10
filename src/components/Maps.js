@@ -19,10 +19,10 @@ const FINAL_RESULTS = [
   {crop: 'Corn', area: 63.81083456, difference: 21, disappeared: 4, new: 25},
   {crop: 'Grass', area: 268.8842214, difference: 3, disappeared: 25, new: 28},
   {crop: 'Herbs', area: 1523.120295, difference: 124, disappeared: 230, new: 354},
-  {crop: 'Onion', area: 1.497640783, difference: 1.497640783, disappeared: 0, new: 1.497640783},
-  {crop: 'Potato', area: 79.65599486, difference: -22, disappeared: 30, new: 8},
+  {crop: 'Onion', area: 1.497640783, difference: 1.497640783, disappeared: 0, new: 1.497640783, status: 'success'},
+  {crop: 'Potato', area: 79.65599486, difference: -22, disappeared: 30, new: 8, status: 'danger'},
   {crop: 'Beetroot', area: 3.541096057, difference: 1.5, disappeared: 2, new: 2.5},
-  {crop: 'Wheat', area: 470.4064003, difference: -53, disappeared: 98, new: 45},
+  {crop: 'Wheat', area: 470.4064003, difference: -53, disappeared: 98, new: 45, status: 'danger'},
 ]
 
 // Tallinn
@@ -302,25 +302,27 @@ class Maps extends Component {
                     <th></th>
                     <th>Crop</th>
                     <th>Area</th>
-                    <th>Difference</th>
                     <th>Disappeared</th>
                     <th>New</th>
+                    <th>Difference</th>
                   </tr>
                 </thead>
                 <tbody>
                 {FINAL_RESULTS.map((row, index) => (
-                  <tr key={index}>
+                  <tr key={index} className={row.status ? `table-${row.status}` : ''}>
                     <th scope="row"></th>
                     <td>{row.crop}</td>
                     <td>{row.area}</td>
-                    <td>{row.difference}</td>
                     <td>{row.disappeared}</td>
                     <td>{row.new}</td>
+                    <td>{row.difference}</td>
                   </tr>
                 ))}
                 </tbody>
               </Table>}
-              {this.state.fetching && <span><ThreeBounce color="#aaa" /> Fetching a beard! Hang tight!</span>}
+              {this.state.fetching && <div className="d-flex align-items-center justify-content-center" style={{ height: 200 }}>
+                <div className="text-muted"><ThreeBounce color="#aaa" /> Fetching a beard! Hang tight!</div>
+              </div>}
             </ModalBody>
             <ModalFooter>
               <Button color="secondary" onClick={this.toggle}>Close</Button>

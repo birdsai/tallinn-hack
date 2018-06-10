@@ -63,6 +63,10 @@ class Home extends Component {
                             time acting on relevant findings and less on searching for them
                         </li>
                     </ul>
+                    <div className="my-2 d-flex justify-content-center">
+                      <img src="/offer.jpg" alt="" className="img-fluid rounded mr-2" style={{ height: 200 }} />
+                      <img src="/offer-2.jpg" alt="" className="img-fluid rounded mr-2" style={{ height: 200 }} />
+                    </div>
                 </div>
                 <div className="container my-5 border-top pt-5">
                     <a name="pricing"></a>

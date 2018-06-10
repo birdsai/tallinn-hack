@@ -9,7 +9,7 @@ class Home extends Component {
             <div>
                 <div className="jumbotron text-center">
                     <h1 className="mx-auto" style={{maxWidth: 900}}>
-                        Accessible, low cost, & highly automated land cover mapping & monitoring across the globe
+                        Accessible, low cost, highly automated land cover mapping & monitoring across the globe
                     </h1>
                     <br/>
                     <p className="mx-auto" style={{maxWidth: 600}}>

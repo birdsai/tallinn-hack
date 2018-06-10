@@ -70,7 +70,7 @@ class Home extends Component {
                     <br/>
                     <div className="card-deck mb-3 text-center" style={{marginTop: 30}}>
                         <div className="card mb-4 box-shadow">
-                            <div className="card-header">
+                            <div className="card-header pricing-header">
                                 <h4 className="my-0 font-weight-normal">Individual Entrepreneurs/Farmers &
                                     Scientists</h4>
                             </div>
@@ -92,7 +92,7 @@ class Home extends Component {
                             </div>
                         </div>
                         <div className="card mb-4 box-shadow" style={{marginTop: -30}}>
-                            <div className="card-header">
+                            <div className="card-header pricing-header">
                                 <h4 className="my-4 font-weight-normal">Governments & NGOs</h4>
                             </div>
                             <div className="card-body">
@@ -112,7 +112,7 @@ class Home extends Component {
                             </div>
                         </div>
                         <div className="card mb-4 box-shadow">
-                            <div className="card-header">
+                            <div className="card-header pricing-header">
                                 <h4 className="my-2 font-weight-normal">Private companies</h4>
                             </div>
                             <div className="card-body">
@@ -126,6 +126,10 @@ class Home extends Component {
                                     <strong>€5 000</strong>
                                     <small className="text-muted">/ year following</small>
                                 </h4>
+                                <ul className="list-unstyled mt-3 mb-4">
+                                    <li>Proprietary model development</li>
+                                    <li>Full suite of functionalities offered in lower tiers</li>
+                                </ul>
                             </div>
                         </div>
                     </div>

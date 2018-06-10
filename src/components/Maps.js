@@ -211,7 +211,7 @@ class Maps extends Component {
   openModal(e) {
     e.preventDefault();
     this.setState({ modal: true, fetching: true });
-    setTimeout(() => this.setState({ fetching: false }), 3000)
+    setTimeout(() => this.setState({ fetching: false }), 2000)
   }
 
   toggle() {
@@ -229,6 +229,7 @@ class Maps extends Component {
               <label>Classes:</label>
               <select name="classes" className="form-control"
                 onChange={this.handleChange}>
+                <option value="">All</option>
                 <option value="beans">Beans</option>
                 <option value="carrots">Carrots</option>
                 <option value="corn">Corn</option>
@@ -314,6 +315,7 @@ class Maps extends Component {
                 ))}
                 </tbody>
               </Table>}
+              {!this.state.fetching && <em className="text-muted text-right">*All units in square kms</em>}
               {this.state.fetching && <div className="d-flex align-items-center justify-content-center" style={{ height: 200 }}>
                 <div className="text-muted"><ThreeBounce color="#aaa" /> Fetching a beard! Hang tight!</div>
               </div>}

@@ -20,7 +20,7 @@ class Home extends Component {
             Explore
           </Link>
         </div>
-        <div className="container my-5 pt-3">
+        {/*<div className="container my-5 pt-3">
           <h1 className="text-center">How it works</h1>
           <div className="row">
             <div className="col-md-4 col-sm-12">
@@ -36,8 +36,8 @@ class Home extends Component {
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime consectetur laudantium inventore quae, libero, cum. Fugiat perferendis omnis</p>
             </div>
           </div>
-        </div>
-        <div className="container my-5 border-top pt-5" style={{ maxWidth: 600 }}>
+        </div>*/}
+        <div className="container my-5 pt-5" style={{ maxWidth: 600 }}>
           <a name="for-whom"></a>
           <h1 className="text-center">For whom</h1>
           <p>
@@ -63,7 +63,7 @@ class Home extends Component {
               Bird’sAI helps people make use of the penta bytes of satellite data that is being generated every day. Through AI technology, we make it our mission to present people who want to leverage haystacks of potentially useful data, with the needles they were looking for.
             </p>
 
-            <img src="http://via.placeholder.com/600x300" alt=""/>
+            <img src="/team.jpg" className="img-fluid rounded" alt=""/>
 
             <div className="my-4" style={{ borderLeft: '5px solid #eee', paddingLeft: 10 }}>
               Strive for elegant and scalable solutions. At the intersection of AI and Earth Observation many awesome things are yet to be achieved.

@@ -12,9 +12,9 @@ class Header extends Component {
           </Link>
         </h5>
         <nav className="my-2 my-md-0 mr-md-3">
-          <a className="p-2" href="#for-whom">For whom</a>
-          <a className="p-2" href="#offer">What we offer</a>
-          <a className="p-2" href="#team">Team</a>
+          <a className="p-2" href="/#for-whom">For whom</a>
+          <a className="p-2" href="/#offer">What we offer</a>
+          <a className="p-2" href="/#team">Team</a>
           <Link className="p-2" to="/maps">Explore</Link>
           <a className="p-2" href="mailto:info@birdsai.co">Contact</a>
         </nav>

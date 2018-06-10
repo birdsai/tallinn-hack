@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import request from 'superagent';
-import {Button} from 'reactstrap'
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Table} from 'reactstrap'
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import L from 'leaflet'
 import 'leaflet-draw';
@@ -13,6 +13,17 @@ const SENTINAL_INSTANCE_ID = '390ee32f-87f7-4536-ac56-5ddce307ff00';
 const API = 'http://birdsai.co/DataRequest/MakeDataRequest';
 const lat = 59.32811085798514;
 const lng = 24.68559265136719;
+const FINAL_RESULTS = [
+  {crop: 'Bean',  area: 152.1852281, difference: -15, disappeared: 30, new: 15},
+  {crop: 'Carrot',  area: 5.789802195, difference: 0.05, disappeared: 0.01, new: 0.06},
+  {crop: 'Corn', area: 63.81083456, difference: 21, disappeared: 4, new: 25},
+  {crop: 'Grass', area: 268.8842214, difference: 3, disappeared: 25, new: 28},
+  {crop: 'Herbs', area: 1523.120295, difference: 124, disappeared: 230, new: 354},
+  {crop: 'Onion', area: 1.497640783, difference: 1.497640783, disappeared: 0, new: 1.497640783},
+  {crop: 'Potato', area: 79.65599486, difference: -22, disappeared: 30, new: 8},
+  {crop: 'Beetroot', area: 3.541096057, difference: 1.5, disappeared: 2, new: 2.5},
+  {crop: 'Wheat', area: 470.4064003, difference: -53, disappeared: 98, new: 45},
+]
 
 // Tallinn
 const bounds = {
@@ -32,11 +43,16 @@ class Maps extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.submit = this.submit.bind(this);
+    this.predict = this.predict.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.toggle = this.toggle.bind(this);
     this.state = {
       model: 'LandUsage',
       satellite: 'L1C',
       area: 'Coordinates',
-      loading: false
+      loading: false,
+      modal: false,
+      fetching: false
     };
   }
 
@@ -131,6 +147,10 @@ class Maps extends Component {
     const ground = L.featureGroup().addTo(map);
     this.ground = ground;
 
+    // add prediction
+    const prediction = L.featureGroup().addTo(map);
+    this.prediction = prediction;
+
     // On drawing rectangle
     map.on(L.Draw.Event.CREATED, e => {
       const type = e.layerType;
@@ -162,6 +182,10 @@ class Maps extends Component {
     })
   }
 
+  predict(e) {
+    this.loadPrediction(this.prediction);
+  }
+
   loadGroundTruth(ground) {
     this.setState({ loading: true });
     const parse_georaster = require("georaster");
@@ -177,11 +201,45 @@ class Maps extends Component {
       arr.forEach(georaster => {
         const layer = new GeoRasterLayer({
           georaster: georaster,
-          opacity: 0.4
+          opacity: 0.2
         });
         ground.addLayer(layer).bringToFront();
       })
     }).then(() => this.setState({ loading: false }));
+  }
+
+  loadPrediction(prediction) {
+    this.setState({ loading: true });
+    const parse_georaster = require("georaster");
+    const GeoRasterLayer = require("georaster-layer-for-leaflet");
+
+    const promises = [];
+    for (var i = 1; i <= 10; i++) {
+      promises.push(fetch(`/images/${i}.tif`)
+        .then(r => r.arrayBuffer())
+        .then(ab => parse_georaster(ab)));
+    }
+    Promise.all(promises).then(arr => {
+      arr.forEach(georaster => {
+        const layer = new GeoRasterLayer({
+          georaster: georaster,
+          opacity: 0.8
+        });
+        prediction.addLayer(layer).bringToFront();
+      })
+    }).then(() => this.setState({ loading: false }));
+  }
+
+  openModal(e) {
+    e.preventDefault();
+    this.setState({ modal: true, fetching: true });
+    setTimeout(() => this.setState({ fetching: false }), 3000)
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
   }
 
   render() {
@@ -231,7 +289,43 @@ class Maps extends Component {
           </div>
           <Button color="primary" onClick={this.submit}>Submit</Button>
           &nbsp;
-          {this.state.loading && <ThreeBounce color="#aaa" />}
+          <Button color="primary" onClick={this.predict}>Add prediction</Button>
+          &nbsp;
+          <a href="" onClick={this.openModal}>What does this mean?</a>
+          {this.state.loading && <span className="text-muted"><ThreeBounce color="#aaa" /> Hang tight! A beard is growing!</span>}
+          <Modal isOpen={this.state.modal} toggle={this.toggle} size="lg">
+            <ModalHeader toggle={this.toggle}>Comparison Results</ModalHeader>
+            <ModalBody>
+              {!this.state.fetching && <Table responsive borderless>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Crop</th>
+                    <th>Area</th>
+                    <th>Difference</th>
+                    <th>Disappeared</th>
+                    <th>New</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {FINAL_RESULTS.map((row, index) => (
+                  <tr key={index}>
+                    <th scope="row"></th>
+                    <td>{row.crop}</td>
+                    <td>{row.area}</td>
+                    <td>{row.difference}</td>
+                    <td>{row.disappeared}</td>
+                    <td>{row.new}</td>
+                  </tr>
+                ))}
+                </tbody>
+              </Table>}
+              {this.state.fetching && <span><ThreeBounce color="#aaa" /> Fetching a beard! Hang tight!</span>}
+            </ModalBody>
+            <ModalFooter>
+              <Button color="secondary" onClick={this.toggle}>Close</Button>
+            </ModalFooter>
+          </Modal>
         </div>
 
         <div id="maps" style={{ height: '600px' }}></div>

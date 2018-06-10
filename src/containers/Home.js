@@ -48,7 +48,7 @@ class Home extends Component {
           <a name="offer"></a>
           <h1 className="text-center">What we offer</h1>
           <p>
-            Make use of our Machine Learning expertise and data infrastructure to leverage the insights that satellite data can give you. Through automated analysis using artificially intelligent image recognition models we can help you makes sense of Earth Observation data for at any scale. All you need to do, is choose the service and subscription that fits you best.
+            Make use of our Machine Learning expertise and data infrastructure to leverage the insights that satellite data can give you. Through automated analysis using artificially intelligent image recognition models we can help you make sense of Earth Observation data for at any scale. All you need to do, is choose the service and subscription that fits you best.
           </p>
           <ul>
             <li>Simply get the easiest access to raw satellite images </li>
@@ -60,13 +60,13 @@ class Home extends Component {
           <a name="team"></a>
           <h1 className="text-center">Team</h1>
             <p>
-              Bird’sAI helps people make use of the penta bytes of satellite data that are being generated every day. Through AI technology, we make it our mission to present people who want to leverage haystacks of potentially useful data, with the needles they were looking for.
+              Bird’sAI helps people make use of the penta bytes of satellite data that is being generated every day. Through AI technology, we make it our mission to present people who want to leverage haystacks of potentially useful data, with the needles they were looking for.
             </p>
 
             <img src="http://via.placeholder.com/600x300" alt=""/>
 
             <div className="my-4" style={{ borderLeft: '5px solid #eee', paddingLeft: 10 }}>
-              Strive for elegant and scalable solutions. At the intersection of AI and Earth Observation many awesome things are yet to be achieved
+              Strive for elegant and scalable solutions. At the intersection of AI and Earth Observation many awesome things are yet to be achieved.
             </div>
 
             <div className="mb-4" style={{ borderLeft: '5px solid #eee', paddingLeft: 10 }}>

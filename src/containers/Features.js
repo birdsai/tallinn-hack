@@ -7,7 +7,7 @@ class FeaturesPage extends Component {
     // const { zoom, lat, lng } = query;
     return (
       <div className="container">
-        <h1 className="text-center">Features</h1>
+        <h1 className="text-center birdai-section">Features</h1>
         <Features />
       </div>
     );

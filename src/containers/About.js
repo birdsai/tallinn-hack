@@ -13,7 +13,7 @@ class About extends Component {
                         every day. Through AI technology, we make it our mission to present people who want to leverage
                         haystacks of potentially useful data, with the needles they were looking for.</p>
 
-                    <p>‘Group photo’</p>
+                    <img src="/team.jpg" alt="Birds AI team" className="img-fluid"/>
 
                     <p>‘’Strive for elegant and scalable solutions. At the intersection of AI and Earth Observation many
                         awesome things are yet to be achieved’’</p>

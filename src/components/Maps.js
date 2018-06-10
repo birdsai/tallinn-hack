@@ -157,7 +157,7 @@ class Maps extends Component {
       const layer = e.layer;
       drawnItems.addLayer(layer);
 
-      this.loadGroundTruth(ground);
+      this.loadTiffs(ground, 'images', 0.2);
       ground.bringToFront();
     });
 
@@ -173,7 +173,7 @@ class Maps extends Component {
     const data = {
       ...this.state
     };
-    this.loadGroundTruth(this.ground);
+    this.loadTiffs(this.ground, 'images', 0.2);
     request
       .post(API)
       .send(data)
@@ -183,17 +183,17 @@ class Maps extends Component {
   }
 
   predict(e) {
-    this.loadPrediction(this.prediction);
+    this.loadTiffs(this.prediction, 'images', 0.8);
   }
 
-  loadGroundTruth(ground) {
+  loadTiffs(_layer, folder = 'images', opacity) {
     this.setState({ loading: true });
     const parse_georaster = require("georaster");
     const GeoRasterLayer = require("georaster-layer-for-leaflet");
 
     const promises = [];
     for (var i = 1; i <= 10; i++) {
-      promises.push(fetch(`/images/${i}.tif`)
+      promises.push(fetch(`/${folder}/${i}.tif`)
         .then(r => r.arrayBuffer())
         .then(ab => parse_georaster(ab)));
     }
@@ -201,31 +201,9 @@ class Maps extends Component {
       arr.forEach(georaster => {
         const layer = new GeoRasterLayer({
           georaster: georaster,
-          opacity: 0.2
+          opacity
         });
-        ground.addLayer(layer).bringToFront();
-      })
-    }).then(() => this.setState({ loading: false }));
-  }
-
-  loadPrediction(prediction) {
-    this.setState({ loading: true });
-    const parse_georaster = require("georaster");
-    const GeoRasterLayer = require("georaster-layer-for-leaflet");
-
-    const promises = [];
-    for (var i = 1; i <= 10; i++) {
-      promises.push(fetch(`/images/${i}.tif`)
-        .then(r => r.arrayBuffer())
-        .then(ab => parse_georaster(ab)));
-    }
-    Promise.all(promises).then(arr => {
-      arr.forEach(georaster => {
-        const layer = new GeoRasterLayer({
-          georaster: georaster,
-          opacity: 0.8
-        });
-        prediction.addLayer(layer).bringToFront();
+        _layer.addLayer(layer).bringToFront();
       })
     }).then(() => this.setState({ loading: false }));
   }
@@ -247,6 +225,22 @@ class Maps extends Component {
       <div>
         <div className="container mb-3">
           <div className="d-flex flex-wrap">
+            <div className="form-group pr-2">
+              <label>Classes:</label>
+              <select name="classes" className="form-control"
+                onChange={this.handleChange}>
+                <option value="beans">Beans</option>
+                <option value="carrots">Carrots</option>
+                <option value="corn">Corn</option>
+                <option value="grass">Grass</option>
+                <option value="herbs">Herbs</option>
+                <option value="onion">Onion</option>
+                <option value="potato">Potato</option>
+                <option value="beetroot">Beetroot</option>
+                <option value="wheat">Wheat</option>
+              </select>
+            </div>
+
             <div className="form-group pr-2">
               <label>Model:</label>
               <select name="model" className="form-control"

@@ -8,19 +8,22 @@ const features = [
   {
     title: 'Cool feature 1',
     image: 'http://via.placeholder.com/450x350',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error nobis earum quo iste doloremque maiores! Deserunt impedit ipsam facilis quidem distinctio eaque eveniet eum accusantium aut! Iusto, consequuntur. Asperiores, dolorem.'
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error nobis earum quo iste doloremque maiores! Deserunt impedit ipsam facilis quidem distinctio eaque eveniet eum accusantium aut! Iusto, consequuntur. Asperiores, dolorem.'
   },
   {
     title: 'Cool feature 2',
     image: 'http://via.placeholder.com/450x350',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error nobis earum quo iste doloremque maiores! Deserunt impedit ipsam facilis quidem distinctio eaque eveniet eum accusantium aut! Iusto, consequuntur. Asperiores, dolorem.'
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error nobis earum quo iste doloremque maiores! Deserunt impedit ipsam facilis quidem distinctio eaque eveniet eum accusantium aut! Iusto, consequuntur. Asperiores, dolorem.'
   },
   {
     title: 'Cool feature 3',
     image: 'http://via.placeholder.com/450x350',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error nobis earum quo iste doloremque maiores! Deserunt impedit ipsam facilis quidem distinctio eaque eveniet eum accusantium aut! Iusto, consequuntur. Asperiores, dolorem.'
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error nobis earum quo iste doloremque maiores! Deserunt impedit ipsam facilis quidem distinctio eaque eveniet eum accusantium aut! Iusto, consequuntur. Asperiores, dolorem.'
   }
-]
+];
 
 export default function Features({ features, alternate }) {
   const leftClassname = idx =>

@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import request from 'superagent';
-import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Table} from 'reactstrap'
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Table
+} from 'reactstrap';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
-import L from 'leaflet'
+import L from 'leaflet';
 import 'leaflet-draw';
 import 'leaflet-draw/dist/leaflet.draw.css';
-import 'leaflet/dist/leaflet.css'
+import 'leaflet/dist/leaflet.css';
 import 'leaflet-geosearch/assets/css/leaflet.css';
 import ThreeBounce from './ThreeBounce';
 
@@ -14,21 +21,66 @@ const API = 'http://birdsai.co/DataRequest/MakeDataRequest';
 const lat = 59.32811085798514;
 const lng = 24.68559265136719;
 const FINAL_RESULTS = [
-  {crop: 'Bean',  area: 152.1852281, difference: -15, disappeared: 30, new: 15},
-  {crop: 'Carrot',  area: 5.789802195, difference: 0.05, disappeared: 0.01, new: 0.06},
-  {crop: 'Corn', area: 63.81083456, difference: 21, disappeared: 4, new: 25},
-  {crop: 'Grass', area: 268.8842214, difference: 3, disappeared: 25, new: 28},
-  {crop: 'Herbs', area: 1523.120295, difference: 124, disappeared: 230, new: 354},
-  {crop: 'Onion', area: 1.497640783, difference: 1.497640783, disappeared: 0, new: 1.497640783, status: 'success'},
-  {crop: 'Potato', area: 79.65599486, difference: -22, disappeared: 30, new: 8, status: 'danger'},
-  {crop: 'Beetroot', area: 3.541096057, difference: 1.5, disappeared: 2, new: 2.5},
-  {crop: 'Wheat', area: 470.4064003, difference: -53, disappeared: 98, new: 45, status: 'danger'},
-]
+  {
+    crop: 'Bean',
+    area: 152.1852281,
+    difference: -15,
+    disappeared: 30,
+    new: 15
+  },
+  {
+    crop: 'Carrot',
+    area: 5.789802195,
+    difference: 0.05,
+    disappeared: 0.01,
+    new: 0.06
+  },
+  { crop: 'Corn', area: 63.81083456, difference: 21, disappeared: 4, new: 25 },
+  { crop: 'Grass', area: 268.8842214, difference: 3, disappeared: 25, new: 28 },
+  {
+    crop: 'Herbs',
+    area: 1523.120295,
+    difference: 124,
+    disappeared: 230,
+    new: 354
+  },
+  {
+    crop: 'Onion',
+    area: 1.497640783,
+    difference: 1.497640783,
+    disappeared: 0,
+    new: 1.497640783,
+    status: 'success'
+  },
+  {
+    crop: 'Potato',
+    area: 79.65599486,
+    difference: -22,
+    disappeared: 30,
+    new: 8,
+    status: 'danger'
+  },
+  {
+    crop: 'Beetroot',
+    area: 3.541096057,
+    difference: 1.5,
+    disappeared: 2,
+    new: 2.5
+  },
+  {
+    crop: 'Wheat',
+    area: 470.4064003,
+    difference: -53,
+    disappeared: 98,
+    new: 45,
+    status: 'danger'
+  }
+];
 
 // Tallinn
 const bounds = {
   w: 24.3457,
-  s: 59.548240,
+  s: 59.54824,
   e: 24.9664,
   n: 59.198438
 };
@@ -59,34 +111,37 @@ class Maps extends Component {
   componentDidMount() {
     // OpenStreetMap
     const osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      attribution:
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     });
 
     // Sentinel Hub WMS service
     // tiles generated using EPSG:3857 projection - Leaflet takes care of that
     const baseUrl = `https://services.sentinel-hub.com/ogc/wms/${SENTINAL_INSTANCE_ID}`;
 
-    const Layer = layer => L.tileLayer.wms(baseUrl, {
-      tileSize: 512,
-      attribution: '&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>',
-      maxcc:99,
-      minZoom:6,
-      maxZoom:16,
-      preset: layer,
-      layers: layer,
-      time:"2015-01-01/2018-06-08",
-    });
+    const Layer = layer =>
+      L.tileLayer.wms(baseUrl, {
+        tileSize: 512,
+        attribution:
+          '&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>',
+        maxcc: 99,
+        minZoom: 6,
+        maxZoom: 16,
+        preset: layer,
+        layers: layer,
+        time: '2015-01-01/2018-06-08'
+      });
     const natural = Layer('TRUE_COLOR');
     const agriculture = Layer('AGRICULTURE');
     const ndvi = Layer('NDVI');
 
     const baseMaps = {
-      'OpenStreetMap': osm
+      OpenStreetMap: osm
     };
     const overlayMaps = {
-      'Natural': natural,
-      'Agriculture': agriculture,
-      'NDVI': ndvi
+      Natural: natural,
+      Agriculture: agriculture,
+      NDVI: ndvi
     };
 
     const map = L.map('maps', {
@@ -178,8 +233,8 @@ class Maps extends Component {
       .post(API)
       .send(data)
       .then(res => {
-      // response
-    })
+        // response
+      });
   }
 
   predict(e) {
@@ -188,30 +243,34 @@ class Maps extends Component {
 
   loadTiffs(_layer, folder = 'images', opacity) {
     this.setState({ loading: true });
-    const parse_georaster = require("georaster");
-    const GeoRasterLayer = require("georaster-layer-for-leaflet");
+    const parse_georaster = require('georaster');
+    const GeoRasterLayer = require('georaster-layer-for-leaflet');
 
     const promises = [];
     for (var i = 1; i <= 10; i++) {
-      promises.push(fetch(`/${folder}/${i}.tif`)
-        .then(r => r.arrayBuffer())
-        .then(ab => parse_georaster(ab)));
+      promises.push(
+        fetch(`/${folder}/${i}.tif`)
+          .then(r => r.arrayBuffer())
+          .then(ab => parse_georaster(ab))
+      );
     }
-    Promise.all(promises).then(arr => {
-      arr.forEach(georaster => {
-        const layer = new GeoRasterLayer({
-          georaster: georaster,
-          opacity
+    Promise.all(promises)
+      .then(arr => {
+        arr.forEach(georaster => {
+          const layer = new GeoRasterLayer({
+            georaster: georaster,
+            opacity
+          });
+          _layer.addLayer(layer).bringToFront();
         });
-        _layer.addLayer(layer).bringToFront();
       })
-    }).then(() => this.setState({ loading: false }));
+      .then(() => this.setState({ loading: false }));
   }
 
   openModal(e) {
     e.preventDefault();
     this.setState({ modal: true, fetching: true });
-    setTimeout(() => this.setState({ fetching: false }), 2000)
+    setTimeout(() => this.setState({ fetching: false }), 2000);
   }
 
   toggle() {
@@ -227,7 +286,9 @@ class Maps extends Component {
           <div className="d-flex flex-wrap">
             <div className="form-group pr-2">
               <label>Classes:</label>
-              <select name="classes" className="form-control"
+              <select
+                name="classes"
+                className="form-control"
                 onChange={this.handleChange}>
                 <option value="">All</option>
                 <option value="beans">Beans</option>
@@ -244,7 +305,9 @@ class Maps extends Component {
 
             <div className="form-group pr-2">
               <label>Model:</label>
-              <select name="model" className="form-control"
+              <select
+                name="model"
+                className="form-control"
                 onChange={this.handleChange}>
                 <option value="LandUsage">Land Usage</option>
                 <option value="CloudDetection">Cloud Detection</option>
@@ -253,9 +316,13 @@ class Maps extends Component {
 
             <div className="form-group pr-2">
               <label>Satellite:</label>
-              <select name="satellite" className="form-control"
+              <select
+                name="satellite"
+                className="form-control"
                 onChange={this.handleChange}>
-                <option value="L1C" selected>L1C</option>
+                <option value="L1C" selected>
+                  L1C
+                </option>
                 <option value="L2A">L2A</option>
                 <option value="SENTINEL1">SENTINEL 1</option>
               </select>
@@ -263,72 +330,110 @@ class Maps extends Component {
 
             <div className="form-group pr-2">
               <label>Select area by:</label>
-              <select name="area" className="form-control"
+              <select
+                name="area"
+                className="form-control"
                 onChange={this.handleChange}>
-                <option value="Coordinates" selected>Coordinates</option>
+                <option value="Coordinates" selected>
+                  Coordinates
+                </option>
                 <option value="Shape">Shape</option>
               </select>
             </div>
 
             <div className="form-group pr-2">
               <label>Date:</label>
-              <input type="date" name="date" className="form-control"
-                onChange={this.handleChange}/>
+              <input
+                type="date"
+                name="date"
+                className="form-control"
+                onChange={this.handleChange}
+              />
             </div>
 
             <div className="form-group pr-2">
               <label>Max days before:</label>
-              <input type="number" name="days" className="form-control"
-                onChange={this.handleChange}/>
+              <input
+                type="number"
+                name="days"
+                className="form-control"
+                onChange={this.handleChange}
+              />
             </div>
           </div>
-          <Button color="primary" onClick={this.submit}>Submit</Button>
+          <Button color="primary" onClick={this.submit}>
+            Submit
+          </Button>
           &nbsp;
-          <Button color="primary" onClick={this.predict}>Add prediction</Button>
+          <Button color="primary" onClick={this.predict}>
+            Add prediction
+          </Button>
           &nbsp;
-          <a href="" onClick={this.openModal}>What does this mean?</a>
-          {this.state.loading && <span className="text-muted"><ThreeBounce color="#aaa" /> Hang tight! A beard is growing!</span>}
+          <a href="" onClick={this.openModal}>
+            What does this mean?
+          </a>
+          {this.state.loading && (
+            <span className="text-muted">
+              <ThreeBounce color="#aaa" /> Hang tight! A beard is growing!
+            </span>
+          )}
           <Modal isOpen={this.state.modal} toggle={this.toggle} size="lg">
             <ModalHeader toggle={this.toggle}>Comparison Results</ModalHeader>
             <ModalBody>
-              {!this.state.fetching && <Table responsive borderless>
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Crop</th>
-                    <th>Area</th>
-                    <th>Disappeared</th>
-                    <th>New</th>
-                    <th>Difference</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {FINAL_RESULTS.map((row, index) => (
-                  <tr key={index} className={row.status ? `table-${row.status}` : ''}>
-                    <th scope="row"></th>
-                    <td>{row.crop}</td>
-                    <td>{row.area}</td>
-                    <td>{row.disappeared}</td>
-                    <td>{row.new}</td>
-                    <td>{row.difference}</td>
-                  </tr>
-                ))}
-                </tbody>
-              </Table>}
-              {!this.state.fetching && <em className="text-muted text-right">*All units in square kms</em>}
-              {this.state.fetching && <div className="d-flex align-items-center justify-content-center" style={{ height: 200 }}>
-                <div className="text-muted"><ThreeBounce color="#aaa" /> Fetching a beard! Hang tight!</div>
-              </div>}
+              {!this.state.fetching && (
+                <Table responsive borderless>
+                  <thead>
+                    <tr>
+                      <th />
+                      <th>Crop</th>
+                      <th>Area</th>
+                      <th>Disappeared</th>
+                      <th>New</th>
+                      <th>Difference</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {FINAL_RESULTS.map((row, index) => (
+                      <tr
+                        key={index}
+                        className={row.status ? `table-${row.status}` : ''}>
+                        <th scope="row" />
+                        <td>{row.crop}</td>
+                        <td>{row.area}</td>
+                        <td>{row.disappeared}</td>
+                        <td>{row.new}</td>
+                        <td>{row.difference}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
+              {!this.state.fetching && (
+                <em className="text-muted text-right">
+                  *All units in square kms
+                </em>
+              )}
+              {this.state.fetching && (
+                <div
+                  className="d-flex align-items-center justify-content-center"
+                  style={{ height: 200 }}>
+                  <div className="text-muted">
+                    <ThreeBounce color="#aaa" /> Fetching a beard! Hang tight!
+                  </div>
+                </div>
+              )}
             </ModalBody>
             <ModalFooter>
-              <Button color="secondary" onClick={this.toggle}>Close</Button>
+              <Button color="secondary" onClick={this.toggle}>
+                Close
+              </Button>
             </ModalFooter>
           </Modal>
         </div>
 
-        <div id="maps" style={{ height: '600px' }}></div>
+        <div id="maps" style={{ height: '600px' }} />
       </div>
-    )
+    );
   }
 }
 

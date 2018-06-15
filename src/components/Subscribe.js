@@ -26,9 +26,12 @@ class Subscribe extends Component {
     return (
       <div className="mailchimp-subscribe text-center">
         <h2>Want to know when we launch?</h2>
-        <br/>
+        <br />
         {!subscribed && (
-          <Form inline className="justify-content-center" onSubmit={this.subscribe}>
+          <Form
+            inline
+            className="justify-content-center"
+            onSubmit={this.subscribe}>
             <FormGroup>
               <Input
                 type="email"
@@ -39,10 +42,7 @@ class Subscribe extends Component {
               />
             </FormGroup>
             &nbsp;
-            <Button
-              size="lg"
-              color="primary"
-              disabled={subscribing || !valid}>
+            <Button size="lg" color="primary" disabled={subscribing || !valid}>
               {subscribing && <ThreeBounce color="white" size={40} />}
               {title || 'Subscribe'}
             </Button>
@@ -50,9 +50,7 @@ class Subscribe extends Component {
         )}
         {subscribed && (
           <div>
-            <h4 className="font-weight-light">
-              Thank you!
-            </h4>
+            <h4 className="font-weight-light">Thank you!</h4>
           </div>
         )}
       </div>

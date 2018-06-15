@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { injectGlobal } from 'styled-components';
 import media from './components/Media';
 

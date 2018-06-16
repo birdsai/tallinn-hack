@@ -14,9 +14,9 @@ class Home extends Component {
           </h1>
           <br />
           <p className="mx-auto" style={{ maxWidth: 600 }}>
-            We firmly believe that life doesn't need to be complicated. Visit
-            our data portal for easy access to near real time & ready-to-use
-            satellite data.
+            We firmly believe that life doesn&apos;t need to be complicated.
+            Visit our data portal for easy access to near real time &
+            ready-to-use satellite data.
           </p>
           <br />
           <Link className="btn btn-primary btn-lg" to="/maps" role="button">
